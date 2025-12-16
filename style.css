@@ -865,5 +865,64 @@ header {
     color: rgba(255,255,255,0.85);
   }
 }
+/* 院長ごあいさつだけfade無効 */
+#about .card {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+/* ============================== */
+/* 院長ごあいさつカードだけ hover無効化 */
+/* ============================== */
+.card.no-hover {
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: default !important;
+}
+
+.card.no-hover:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.card.no-hover:hover h3 {
+  color: inherit !important; /* ← 青くならない */
+}
+/* ============================== */
+/* 院長ごあいさつカードデザイン調整 */
+/* ============================== */
+.card.no-hover {
+  background-color: #f0f6ff !important; /* ← 淡いブルー背景 */
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: default !important;
+  border: 1px solid #e0e7ff; /* 薄い青枠で清潔感UP */
+}
+
+.card.no-hover:hover {
+  background-color: #f0f6ff !important; /* hover時も変化なし */
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.card.no-hover h3 {
+  color: #1f2937; /* 通常文字色に固定（濃いグレー） */
+}
+
+.card.no-hover:hover h3 {
+  color: #1f2937 !important; /* hoverしても色変化なし */
+}
+/* 採用ページリンクスタイル */
+.recruit-link {
+  color: #1d4ed8;             /* やさしい青 */
+  text-decoration: none;       /* 下線を消す */
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.recruit-link:hover {
+  color: #2563eb;             /* hover時に少し濃い青に */
+  text-decoration: underline; /* hoverで下線を表示（分かりやすく） */
+}
 
 

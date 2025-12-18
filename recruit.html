@@ -11,28 +11,67 @@
 
     <style>
         /* 
-           ▼▼▼ 採用ページ専用スタイル ▼▼▼
-           ※ここにある設定が優先されます
+           ▼▼▼ 採用ページ専用のスタイル ▼▼▼
+           ※ここにはLP部分（中身）の見た目調整と
+             スマホメニューを「写真通り」にするための設定が入っています。
         */
 
-        /* レイアウト基本設定 */
+        /* --- 1. スマホメニューのデザイン調整（nav-open時） --- */
+        @media (max-width: 768px) {
+            /* メニューが開いた時のスタイル（index.htmlのスクリプトで nav-open クラスがつきます） */
+            .nav.nav-open {
+                display: block !important;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh; /* 全画面 */
+                background-color: #fff; /* 白背景 */
+                padding-top: 80px; /* ヘッダーの下から開始 */
+                z-index: 999;
+                overflow-y: auto;
+            }
+
+            /* リンクの文字スタイル（左揃え・線なし） */
+            .nav.nav-open a {
+                display: block;
+                padding: 15px 25px; /* 左に余白 */
+                text-align: left;   /* ★左揃え */
+                font-size: 1rem;
+                color: #333;
+                text-decoration: none;
+                border-bottom: none; /* ★線なし */
+            }
+
+            /* 採用情報のボタンだけ少し目立たせる場合（任意） */
+            .nav.nav-open a.nav-accent {
+                background-color: transparent;
+                color: #0078d7;
+                font-weight: bold;
+            }
+        }
+
+
+        /* --- 2. 採用LP（中身）のレイアウト設定 --- */
+
+        /* メインビジュアル */
         .recruit-hero {
             background-color: #eaf6ff;
             padding: 100px 0;
             text-align: left;
+            margin-top: 60px; /* 固定ヘッダーの分だけ下げる */
         }
 
+        /* セクション共通 */
         .recruit-section {
             padding: 80px 0;
         }
-
         .section-title {
             font-size: 2rem;
             text-align: center;
             margin-bottom: 40px;
             font-weight: bold;
         }
-
         .section-title span {
             display: block;
             font-size: 1rem;
@@ -42,7 +81,7 @@
         }
 
         /* ボタン */
-        .btn {
+        .btn-recruit {
             display: inline-block;
             padding: 15px 40px;
             background-color: #0078d7;
@@ -55,12 +94,12 @@
             text-decoration: none;
             transition: 0.3s;
         }
-        .btn:hover {
+        .btn-recruit:hover {
             background-color: #005a9e;
             transform: translateY(-2px);
         }
 
-        /* メリット（3つの特徴） */
+        /* メリット */
         .merit-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -104,7 +143,7 @@
             margin-bottom: 15px;
         }
         
-        /* リストの基本設定 */
+        /* リスト（✔マーク） */
         .job-list { list-style: none; }
         .job-list li {
             position: relative;
@@ -154,11 +193,8 @@
             color: #333;
         }
 
-        /* 
-           ▼▼▼ 【重要】スマホ表示の修正エリア ▼▼▼ 
-        */
+        /* --- 3. スマホ閲覧時の微調整（余白など） --- */
         @media (max-width: 768px) {
-            /* 1. 余白（padding）を強制的に小さくする */
             .recruit-hero {
                 padding: 60px 0 30px !important;
                 text-align: center;
@@ -172,27 +208,10 @@
             .section-title {
                 margin-bottom: 25px !important;
             }
-
-            /* 2. チェックマークのズレ修正 */
             .job-body {
                 text-align: left !important;
                 padding: 20px !important;
             }
-            .job-list {
-                padding-left: 0 !important;
-                margin-left: 5px !important;
-            }
-            .job-list li {
-                text-align: left !important;
-                padding-left: 1.5em !important;
-                line-height: 1.5;
-            }
-            .job-list li::before {
-                left: 0 !important;
-                top: 0 !important;
-            }
-
-            /* 3. その他のレイアウト調整 */
             .merit-grid {
                 grid-template-columns: 1fr;
             }
@@ -200,58 +219,38 @@
                 display: block;
                 width: 100%;
             }
-
-            /* 4. スマホ用メニューの見た目制御（念のため） */
-            .nav {
-                /* デフォルトで隠す設定がstyle.cssにない場合の保険 */
-                display: none; 
-            }
-            /* JSで .active がついた時に表示する */
-            .nav.active {
-                display: block !important;
-                position: absolute;
-                top: 100%; /* ヘッダーの下に表示 */
-                left: 0;
-                width: 100%;
-                background: #fff;
-                padding: 20px;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                z-index: 1000;
-            }
-            .nav.active a {
-                display: block;
-                padding: 10px 0;
-                border-bottom: 1px solid #eee;
-                text-align: center;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- 固定ヘッダー -->
-    <header class="site-header" style="position: relative;"> <!-- relativeを追加してメニュー位置を安定化 -->
-        <div class="container header-inner">
-            <div class="logo">Meguro Dental</div>
+  <!-- 
+    ▼▼▼ 固定ヘッダー（index.htmlからコピー＆リンク修正版） ▼▼▼ 
+  -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">Meguro Dental</div>
 
-            <!-- メニュー -->
-            <nav class="nav">
-                <a href="index.html#about">当院について</a>
-                <a href="index.html#menu">診療メニュー</a>
-                <a href="index.html#feature">選ばれる理由</a>
-                <a href="index.html#access">アクセス</a>
-                <a href="#recruit" class="nav-accent" style="font-weight:bold;">採用情報</a>
-            </nav>
+      <nav class="nav">
+        <!-- リンクを index.html#〜 に書き換えています -->
+        <a href="index.html#about">当院について</a>
+        <a href="index.html#menu">診療メニュー</a>
+        <a href="index.html#feature">選ばれる理由</a>
+        <a href="index.html#access">アクセス</a>
+        <a href="#" class="nav-accent" style="font-weight: bold;">採用情報</a>
+      </nav>
 
-            <!-- スマホ用ハンバーガーボタン -->
-            <button class="nav-toggle" aria-label="メニュー">
-                <span></span><span></span><span></span>
-            </button>
-        </div>
-    </header>
+      <!-- スマホ用ハンバーガーボタン -->
+      <button class="nav-toggle" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
+
+  <main>
     <!-- メインビジュアル -->
-    <section class="recruit-hero">
+    <section class="recruit-hero fade-in">
         <div class="container">
             <h1>採用情報</h1>
             <h2 style="font-size: 1.5rem; margin: 20px 0;">あなたの笑顔が、地域の安心につながる。<br>患者さまのお口の健康を支える仕事。</h2>
@@ -260,12 +259,12 @@
                 明るく、やさしい雰囲気の中で患者さまに寄り添う仕事をしませんか？
             </p>
             <br>
-            <a href="#entry" class="btn">募集要項を見る</a>
+            <a href="#entry" class="btn-recruit">募集要項を見る</a>
         </div>
     </section>
 
     <!-- コンセプト -->
-    <section class="recruit-section">
+    <section class="recruit-section fade-in">
         <div class="container">
             <h2 class="section-title">
                 <span>Our Concept</span>
@@ -282,7 +281,7 @@
     </section>
 
     <!-- 選ばれる理由 -->
-    <section class="recruit-section" style="background-color: #f9f9f9;">
+    <section class="recruit-section fade-in" style="background-color: #f9f9f9;">
         <div class="container">
             <h2 class="section-title">
                 <span>Why work with us?</span>
@@ -309,7 +308,7 @@
     </section>
 
     <!-- 募集職種詳細 -->
-    <section class="recruit-section">
+    <section class="recruit-section fade-in">
         <div class="container">
             <h2 class="section-title">
                 <span>Recruitment</span>
@@ -351,7 +350,7 @@
     </section>
 
     <!-- 募集要項テーブル -->
-    <section class="recruit-section" style="background-color: #f9f9f9;" id="entry">
+    <section class="recruit-section fade-in" style="background-color: #f9f9f9;" id="entry">
         <div class="container">
             <h2 class="section-title">
                 <span>Data</span>
@@ -377,13 +376,13 @@
                 <tr>
                     <th>勤務時間</th>
                     <td>
-                        平日：9:00〜19:00（休憩〇分）<br>
-                        土曜：9:00〜17:00（休憩〇分）
+                        平日：9:30〜13:00 / 14:30〜18:30<br>
+                        土曜：9:30〜14:00
                     </td>
                 </tr>
                 <tr>
                     <th>休日・休暇</th>
-                    <td>完全週休2日制、祝日、夏季休暇、年末年始、有給休暇</td>
+                    <td>木曜・日曜・祝日、夏季休暇、年末年始、有給休暇</td>
                 </tr>
                 <tr>
                     <th>待遇・福利厚生</th>
@@ -394,39 +393,64 @@
     </section>
 
     <!-- CTA エントリー -->
-    <section class="recruit-section" style="background-color: #eaf6ff;">
+    <section class="recruit-section fade-in" style="background-color: #eaf6ff;">
         <div class="container">
             <div class="cta-box">
                 <h2>まずはお気軽に見学へお越しください！</h2>
                 <p>「職場の雰囲気を知りたい」「詳しい条件を聞きたい」という方は、院内見学も随時受け付けています。<br>少しでも興味をお持ちいただけたら、お気軽にご連絡ください。</p>
-                <a href="tel:0300000000" class="cta-tel">TEL: 03-xxxx-xxxx</a>
-                <a href="#" class="btn">応募フォームはこちら</a>
+                <a href="tel:0000000000" class="cta-tel">TEL: 00-0000-0000</a>
+                <a href="#" class="btn-recruit">応募フォームはこちら</a>
             </div>
         </div>
     </section>
+  </main>
 
-    <!-- フッター -->
-    <footer>
-        <div class="container" style="text-align: center; padding: 20px;">
-            <p>&copy; 2025 Meguro Dental. All Rights Reserved.</p>
-        </div>
-    </footer>
+  <!-- 
+    ▼▼▼ フッター（index.htmlと同じもの） ▼▼▼ 
+  -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-logo">Meguro Dental</p>
+      <p class="footer-copy">© 2025 Meguro Dental Clinic</p>
+    </div>
+  </footer>
 
-    <!-- ▼▼▼ ハンバーガーメニューを動かすスクリプト（修正版） ▼▼▼ -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // クラス名を正しく合わせました
-            const toggleBtn = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.nav'); 
+  <!-- 
+    ▼▼▼ 【重要】ここがスクリプトです（index.htmlと同じもの） ▼▼▼ 
+    これがないとハンバーガーボタンが動きません。
+  -->
+  <script>
+    // ヘッダーの影・背景
+    const header = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
 
-            if (toggleBtn && nav) {
-                toggleBtn.addEventListener('click', function () {
-                    // ボタンとメニューの両方に active クラスを付け外しする
-                    toggleBtn.classList.toggle('active');
-                    nav.classList.toggle('active');
-                });
-            }
-        });
-    </script>
+    // スマホメニュー
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    
+    // index.htmlの仕様に合わせて nav-open クラスを付け外しします
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('nav-open');
+      navToggle.classList.toggle('open');
+    });
+
+    // スクロールアニメーション（fade-inクラスがある要素をふわっと表示）
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>

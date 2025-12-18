@@ -6,31 +6,20 @@
     <title>採用情報 | Meguro Dental</title>
     <meta name="description" content="Meguro Dentalの採用情報ページです。">
     
-    <!-- ▼【重要】メインのCSS（style.css）を読み込みます -->
+    <!-- ▼ メインのCSS（style.css）を読み込み -->
     <link rel="stylesheet" href="style.css">
 
     <style>
         /* 
-           ここには「採用ページ専用」のスタイルのみ記述しています。
-           ヘッダーやフォントは style.css の設定が適用されます。
+           ▼▼▼ 採用ページ専用スタイル ▼▼▼
+           ※ここにある設定が優先されます
         */
 
-        /* --- 採用ページ専用レイアウト --- */
+        /* レイアウト基本設定 */
         .recruit-hero {
             background-color: #eaf6ff;
             padding: 100px 0;
             text-align: left;
-        }
-        
-        /* スマホ対応 */
-        @media (max-width: 768px) {
-            .recruit-hero {
-                padding: 60px 0;
-                text-align: center;
-            }
-            .recruit-hero h1 {
-                font-size: 1.8rem;
-            }
         }
 
         .recruit-section {
@@ -52,6 +41,7 @@
             font-weight: normal;
         }
 
+        /* ボタン */
         .btn {
             display: inline-block;
             padding: 15px 40px;
@@ -65,13 +55,12 @@
             text-decoration: none;
             transition: 0.3s;
         }
-
         .btn:hover {
             background-color: #005a9e;
             transform: translateY(-2px);
         }
 
-        /* --- メリット --- */
+        /* メリット（3つの特徴） */
         .merit-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -90,11 +79,8 @@
             border-bottom: 2px solid #eaf6ff;
             padding-bottom: 10px;
         }
-        @media (max-width: 768px) {
-            .merit-grid { grid-template-columns: 1fr; }
-        }
 
-        /* --- 募集職種 --- */
+        /* 募集職種 */
         .job-block {
             margin-bottom: 50px;
             border: 1px solid #e2e8f0;
@@ -117,6 +103,8 @@
             color: #0078d7;
             margin-bottom: 15px;
         }
+        
+        /* リストの基本設定 */
         .job-list { list-style: none; }
         .job-list li {
             position: relative;
@@ -131,7 +119,7 @@
             font-weight: bold;
         }
 
-        /* --- 募集要項テーブル --- */
+        /* 募集要項テーブル */
         .req-table {
             width: 100%;
             border-collapse: collapse;
@@ -147,12 +135,8 @@
             width: 30%;
             font-weight: bold;
         }
-        @media (max-width: 600px) {
-            .req-table th, .req-table td { display: block; width: 100%; }
-            .req-table th { background-color: #eaf6ff; }
-        }
 
-        /* --- CTA --- */
+        /* CTA */
         .cta-box {
             background: #fff;
             padding: 50px;
@@ -169,29 +153,102 @@
             display: block;
             color: #333;
         }
+
+        /* 
+           ▼▼▼ 【重要】スマホ表示の修正エリア ▼▼▼ 
+        */
+        @media (max-width: 768px) {
+            /* 1. 余白（padding）を強制的に小さくする */
+            .recruit-hero {
+                padding: 60px 0 30px !important;
+                text-align: center;
+            }
+            .recruit-hero h1 {
+                font-size: 1.8rem;
+            }
+            .recruit-section {
+                padding: 40px 0 !important;
+            }
+            .section-title {
+                margin-bottom: 25px !important;
+            }
+
+            /* 2. チェックマークのズレ修正 */
+            .job-body {
+                text-align: left !important;
+                padding: 20px !important;
+            }
+            .job-list {
+                padding-left: 0 !important;
+                margin-left: 5px !important;
+            }
+            .job-list li {
+                text-align: left !important;
+                padding-left: 1.5em !important;
+                line-height: 1.5;
+            }
+            .job-list li::before {
+                left: 0 !important;
+                top: 0 !important;
+            }
+
+            /* 3. その他のレイアウト調整 */
+            .merit-grid {
+                grid-template-columns: 1fr;
+            }
+            .req-table th, .req-table td {
+                display: block;
+                width: 100%;
+            }
+
+            /* 4. スマホ用メニューの見た目制御（念のため） */
+            .nav {
+                /* デフォルトで隠す設定がstyle.cssにない場合の保険 */
+                display: none; 
+            }
+            /* JSで .active がついた時に表示する */
+            .nav.active {
+                display: block !important;
+                position: absolute;
+                top: 100%; /* ヘッダーの下に表示 */
+                left: 0;
+                width: 100%;
+                background: #fff;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                z-index: 1000;
+            }
+            .nav.active a {
+                display: block;
+                padding: 10px 0;
+                border-bottom: 1px solid #eee;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
 
-     <!-- 固定ヘッダー -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="logo">Meguro Dental</div>
+    <!-- 固定ヘッダー -->
+    <header class="site-header" style="position: relative;"> <!-- relativeを追加してメニュー位置を安定化 -->
+        <div class="container header-inner">
+            <div class="logo">Meguro Dental</div>
 
-      <nav class="nav">
-        <a href="index.html#about">当院について</a>
-        <a href="index.html#menu">診療メニュー</a>
-        <a href="index.html#feature">選ばれる理由</a>
-        <a href="index.html#access">アクセス</a>
-<a href="#recruit" class="nav-accent">採用情報</a>
-</nav>
+            <!-- メニュー -->
+            <nav class="nav">
+                <a href="index.html#about">当院について</a>
+                <a href="index.html#menu">診療メニュー</a>
+                <a href="index.html#feature">選ばれる理由</a>
+                <a href="index.html#access">アクセス</a>
+                <a href="#recruit" class="nav-accent" style="font-weight:bold;">採用情報</a>
+            </nav>
 
-      <!-- スマホ用ハンバーガーボタン -->
-      <button class="nav-toggle" aria-label="メニュー">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+            <!-- スマホ用ハンバーガーボタン -->
+            <button class="nav-toggle" aria-label="メニュー">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
 
     <!-- メインビジュアル -->
     <section class="recruit-hero">
@@ -354,34 +411,22 @@
             <p>&copy; 2025 Meguro Dental. All Rights Reserved.</p>
         </div>
     </footer>
-<!-- ▼▼▼ ハンバーガーメニューを動かすプログラム ▼▼▼ -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // 1. ボタンとメニューを探す
-        const toggleBtn = document.querySelector('.nav-toggle');
-        const navList = document.querySelector('.nav-list'); // ※もしメニューが出てこない場合はここを確認
 
-        // 2. ボタンが見つかったらクリックイベントを設定
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', function () {
-                // ボタンに 'active' クラスをつける（×印にするためなど）
-                toggleBtn.classList.toggle('active');
-                
-                // メニューに 'active' クラスをつける（表示させるため）
-                if (navList) {
-                    navList.classList.toggle('active');
-                    
-                    // ※念のため、CSSで制御されていない場合用に直接表示を切り替える設定
-                    if (navList.style.display === 'block') {
-                        navList.style.display = ''; // 隠す
-                    } else {
-                        navList.style.display = 'block'; // 表示する
-                    }
-                }
-            });
-        }
-    });
-</script>
-</body>
+    <!-- ▼▼▼ ハンバーガーメニューを動かすスクリプト（修正版） ▼▼▼ -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // クラス名を正しく合わせました
+            const toggleBtn = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('.nav'); 
+
+            if (toggleBtn && nav) {
+                toggleBtn.addEventListener('click', function () {
+                    // ボタンとメニューの両方に active クラスを付け外しする
+                    toggleBtn.classList.toggle('active');
+                    nav.classList.toggle('active');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

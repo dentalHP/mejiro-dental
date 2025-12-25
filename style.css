@@ -8,7 +8,16 @@
 html {
   scroll-behavior: smooth;
 }
-
+.demo-banner {
+  background-color: #ff4d4d;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
